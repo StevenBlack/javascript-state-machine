@@ -40,7 +40,8 @@
       var defaults = {
         events: [],
         callbacks: {},
-        target: {}
+        target: {},
+        transitions: {}
       };
 
       var settings = Object.assign({}, defaults, options);
@@ -49,19 +50,18 @@
       var terminal     = options.terminal || options['final'];
       var fsm          = target || settings.target;
       var map          = {}; // track state transitions allowed for an event { event: { from: [ to ] } }
-      var transitions  = {}; // track events allowed from a state            { state: [ event ] }
 
       var add = function(e) {
         var from = Array.isArray(e.from) ? e.from : (e.from ? [e.from] : [StateMachine.WILDCARD]); // allow 'wildcard' transition if 'from' is not specified
         map[e.name] = map[e.name] || {};
         for (var n = 0 ; n < from.length ; n++) {
-          transitions[from[n]] = transitions[from[n]] || [];
-          transitions[from[n]].push(e.name);
+          settings.transitions[from[n]] = settings.transitions[from[n]] || [];
+          settings.transitions[from[n]].push(e.name);
 
           map[e.name][from[n]] = e.to || from[n]; // allow no-op transition if 'to' is not specified
         }
         if (e.to) {
-          transitions[e.to] = transitions[e.to] || [];
+          settings.transitions[e.to] = settings.transitions[e.to] || [];
         }
       };
 
@@ -89,10 +89,10 @@
       fsm.is          = function(state) { return Array.isArray(state) ? (state.indexOf(this.current) >= 0) : (this.current === state); };
       fsm.can         = function(event) { return !this.transition && (map[event] !== undefined) && (map[event].hasOwnProperty(this.current) || map[event].hasOwnProperty(StateMachine.WILDCARD)); }
       fsm.cannot      = function(event) { return !this.can(event); };
-      fsm.transitions = function()      { return (transitions[this.current] || []).concat(transitions[StateMachine.WILDCARD] || []); };
+      fsm.transitions = function()      { return (settings.transitions[this.current] || []).concat(settings.transitions[StateMachine.WILDCARD] || []); };
       fsm.isFinished  = function()      { return this.is(terminal); };
       fsm.error       = options.error || function(name, from, to, args, error, msg, e) { throw e || msg; }; // default behavior when something unexpected happens is to throw an exception, but caller can override this behavior if desired (see github issue #3 and #17)
-      fsm.states      = function() { return Object.keys(transitions).sort() };
+      fsm.states      = function() { return Object.keys(settings.transitions).sort() };
 
       fsm.defaults = defaults;
       fsm.options  = options;
