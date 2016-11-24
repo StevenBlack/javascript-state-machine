@@ -37,11 +37,13 @@
 
     create: function(options, target) {
 
+      // map: track state transitions allowed for an event { event: { from: [ to ] } }
       var defaults = {
         events: [],
         callbacks: {},
         target: {},
-        transitions: {}
+        transitions: {},
+        map: {}
       };
 
       var settings = Object.assign({}, defaults, options);
@@ -49,16 +51,15 @@
       var initial      = (typeof options.initial == 'string') ? { state: options.initial } : options.initial; // allow for a simple string, or an object with { state: 'foo', event: 'setup', defer: true|false }
       var terminal     = options.terminal || options['final'];
       var fsm          = target || settings.target;
-      var map          = {}; // track state transitions allowed for an event { event: { from: [ to ] } }
 
       var add = function(e) {
         var from = Array.isArray(e.from) ? e.from : (e.from ? [e.from] : [StateMachine.WILDCARD]); // allow 'wildcard' transition if 'from' is not specified
-        map[e.name] = map[e.name] || {};
+        settings.map[e.name] = settings.map[e.name] || {};
         for (var n = 0 ; n < from.length ; n++) {
           settings.transitions[from[n]] = settings.transitions[from[n]] || [];
           settings.transitions[from[n]].push(e.name);
 
-          map[e.name][from[n]] = e.to || from[n]; // allow no-op transition if 'to' is not specified
+          settings.map[e.name][from[n]] = e.to || from[n]; // allow no-op transition if 'to' is not specified
         }
         if (e.to) {
           settings.transitions[e.to] = settings.transitions[e.to] || [];
@@ -73,9 +74,9 @@
       for(var n = 0 ; n < settings.events.length ; n++)
         add(settings.events[n]);
 
-      for(var name in map) {
-        if (map.hasOwnProperty(name)) {
-          fsm[name] = StateMachine.buildEvent(name, map[name]);
+      for(var name in settings.map) {
+        if (settings.map.hasOwnProperty(name)) {
+          fsm[name] = StateMachine.buildEvent(name, settings.map[name]);
         }
       }
 
@@ -87,7 +88,7 @@
 
       fsm.current     = 'none';
       fsm.is          = function(state) { return Array.isArray(state) ? (state.indexOf(this.current) >= 0) : (this.current === state); };
-      fsm.can         = function(event) { return !this.transition && (map[event] !== undefined) && (map[event].hasOwnProperty(this.current) || map[event].hasOwnProperty(StateMachine.WILDCARD)); }
+      fsm.can         = function(event) { return !this.transition && (settings.map[event] !== undefined) && (settings.map[event].hasOwnProperty(this.current) || settings.map[event].hasOwnProperty(StateMachine.WILDCARD)); }
       fsm.cannot      = function(event) { return !this.can(event); };
       fsm.transitions = function()      { return (settings.transitions[this.current] || []).concat(settings.transitions[StateMachine.WILDCARD] || []); };
       fsm.isFinished  = function()      { return this.is(terminal); };
