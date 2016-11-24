@@ -47,9 +47,8 @@
       };
 
       var settings = Object.assign({}, defaults, options);
-
+      settings.terminal= settings.terminal || settings['final'];
       var initial      = (typeof options.initial == 'string') ? { state: options.initial } : options.initial; // allow for a simple string, or an object with { state: 'foo', event: 'setup', defer: true|false }
-      var terminal     = options.terminal || options['final'];
       var fsm          = target || settings.target;
 
       var add = function(e) {
@@ -91,7 +90,7 @@
       fsm.can         = function(event) { return !this.transition && (settings.map[event] !== undefined) && (settings.map[event].hasOwnProperty(this.current) || settings.map[event].hasOwnProperty(StateMachine.WILDCARD)); }
       fsm.cannot      = function(event) { return !this.can(event); };
       fsm.transitions = function()      { return (settings.transitions[this.current] || []).concat(settings.transitions[StateMachine.WILDCARD] || []); };
-      fsm.isFinished  = function()      { return this.is(terminal); };
+      fsm.isFinished  = function()      { return this.is(settings.terminal); };
       fsm.error       = options.error || function(name, from, to, args, error, msg, e) { throw e || msg; }; // default behavior when something unexpected happens is to throw an exception, but caller can override this behavior if desired (see github issue #3 and #17)
       fsm.states      = function() { return Object.keys(settings.transitions).sort() };
 
