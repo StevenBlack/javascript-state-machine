@@ -54,8 +54,9 @@
 
           map[e.name][from[n]] = e.to || from[n]; // allow no-op transition if 'to' is not specified
         }
-        if (e.to)
+        if (e.to) {
           transitions[e.to] = transitions[e.to] || [];
+        }
       };
 
       if (initial) {
@@ -67,13 +68,15 @@
         add(events[n]);
 
       for(var name in map) {
-        if (map.hasOwnProperty(name))
+        if (map.hasOwnProperty(name)) {
           fsm[name] = StateMachine.buildEvent(name, map[name]);
+        }
       }
 
       for(var name in callbacks) {
-        if (callbacks.hasOwnProperty(name))
+        if (callbacks.hasOwnProperty(name)) {
           fsm[name] = callbacks[name]
+        }
       }
 
       fsm.current     = 'none';
@@ -85,8 +88,9 @@
       fsm.error       = options.error || function(name, from, to, args, error, msg, e) { throw e || msg; }; // default behavior when something unexpected happens is to throw an exception, but caller can override this behavior if desired (see github issue #3 and #17)
       fsm.states      = function() { return Object.keys(transitions).sort() };
 
-      if (initial && !initial.defer)
+      if (initial && !initial.defer) {
         fsm[initial.event]();
+      }
 
       return fsm;
 
@@ -130,10 +134,11 @@
     leaveState: function(fsm, name, from, to, args) {
       var specific = StateMachine.leaveThisState(fsm, name, from, to, args),
           general  = StateMachine.leaveAnyState( fsm, name, from, to, args);
-      if ((false === specific) || (false === general))
+      if ((false === specific) || (false === general)) {
         return false;
-      else if ((StateMachine.ASYNC === specific) || (StateMachine.ASYNC === general))
+      } else if ((StateMachine.ASYNC === specific) || (StateMachine.ASYNC === general)) {
         return StateMachine.ASYNC;
+      }
     },
 
     enterState: function(fsm, name, from, to, args) {
@@ -150,14 +155,17 @@
         var to    = map[from] || (map[StateMachine.WILDCARD] != StateMachine.WILDCARD ? map[StateMachine.WILDCARD] : from) || from;
         var args  = Array.prototype.slice.call(arguments); // turn arguments into pure array
 
-        if (this.transition)
+        if (this.transition) {
           return this.error(name, from, to, args, StateMachine.Error.PENDING_TRANSITION, "event " + name + " inappropriate because previous transition did not complete");
+        }
 
-        if (this.cannot(name))
+        if (this.cannot(name)) {
           return this.error(name, from, to, args, StateMachine.Error.INVALID_TRANSITION, "event " + name + " inappropriate in current state " + this.current);
+        }
 
-        if (false === StateMachine.beforeEvent(this, name, from, to, args))
+        if (false === StateMachine.beforeEvent(this, name, from, to, args)) {
           return StateMachine.Result.CANCELLED;
+        }
 
         if (from === to) {
           StateMachine.afterEvent(this, name, from, to, args);
@@ -188,8 +196,9 @@
           return StateMachine.Result.PENDING;
         }
         else {
-          if (this.transition) // need to check in case user manually called transition() but forgot to return StateMachine.ASYNC
+          if (this.transition) {  // need to check in case user manually called transition() but forgot to return StateMachine.ASYNC
             return this.transition();
+          }
         }
 
       };
