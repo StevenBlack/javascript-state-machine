@@ -48,7 +48,8 @@
 
       var settings = Object.assign({}, defaults, options);
       settings.terminal= settings.terminal || settings['final'];
-      var initial      = (typeof options.initial == 'string') ? { state: options.initial } : options.initial; // allow for a simple string, or an object with { state: 'foo', event: 'setup', defer: true|false }
+      settings.initial = (typeof settings.initial == 'string') ? { state: settings.initial } : settings.initial; // allow for a simple string, or an object with { state: 'foo', event: 'setup', defer: true|false }
+
       var fsm          = target || settings.target;
 
       var add = function(e) {
@@ -65,9 +66,9 @@
         }
       };
 
-      if (initial) {
-        initial.event = initial.event || 'startup';
-        add({ name: initial.event, from: 'none', to: initial.state });
+      if (settings.initial) {
+        settings.initial.event = settings.initial.event || 'startup';
+        add({ name: settings.initial.event, from: 'none', to: settings.initial.state });
       }
 
       for(var n = 0 ; n < settings.events.length ; n++)
@@ -98,8 +99,8 @@
       fsm.options  = options;
       fsm.settings = settings;
 
-      if (initial && !initial.defer) {
-        fsm[initial.event]();
+      if (settings.initial && !settings.initial.defer) {
+        fsm[settings.initial.event]();
       }
 
       return fsm;
