@@ -37,11 +37,17 @@
 
     create: function(options, target) {
 
+      var defaults = {
+        events: [],
+        callbacks: {},
+        target: {}
+      };
+
+      var settings = Object.assign({}, defaults, options);
+
       var initial      = (typeof options.initial == 'string') ? { state: options.initial } : options.initial; // allow for a simple string, or an object with { state: 'foo', event: 'setup', defer: true|false }
       var terminal     = options.terminal || options['final'];
-      var fsm          = target || options.target  || {};
-      var events       = options.events || [];
-      var callbacks    = options.callbacks || {};
+      var fsm          = target || settings.target;
       var map          = {}; // track state transitions allowed for an event { event: { from: [ to ] } }
       var transitions  = {}; // track events allowed from a state            { state: [ event ] }
 
@@ -64,8 +70,8 @@
         add({ name: initial.event, from: 'none', to: initial.state });
       }
 
-      for(var n = 0 ; n < events.length ; n++)
-        add(events[n]);
+      for(var n = 0 ; n < settings.events.length ; n++)
+        add(settings.events[n]);
 
       for(var name in map) {
         if (map.hasOwnProperty(name)) {
@@ -73,9 +79,9 @@
         }
       }
 
-      for(var name in callbacks) {
-        if (callbacks.hasOwnProperty(name)) {
-          fsm[name] = callbacks[name]
+      for(var name in settings.callbacks) {
+        if (settings.callbacks.hasOwnProperty(name)) {
+          fsm[name] = settings.callbacks[name]
         }
       }
 
@@ -87,6 +93,10 @@
       fsm.isFinished  = function()      { return this.is(terminal); };
       fsm.error       = options.error || function(name, from, to, args, error, msg, e) { throw e || msg; }; // default behavior when something unexpected happens is to throw an exception, but caller can override this behavior if desired (see github issue #3 and #17)
       fsm.states      = function() { return Object.keys(transitions).sort() };
+
+      fsm.defaults = defaults;
+      fsm.options  = options;
+      fsm.settings = settings;
 
       if (initial && !initial.defer) {
         fsm[initial.event]();
