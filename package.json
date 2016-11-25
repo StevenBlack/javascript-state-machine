@@ -27,6 +27,11 @@
   "scripts": {
     "start": "ws --rewrite '/test -> /test/'",
     "test": "node test/runner",
-    "minify": "uglifyjs state-machine.js --output state-machine.min.js --compress --mangle --stats"
+    "minify": "uglifyjs state-machine.js --output state-machine.min.js --compress --mangle --stats",
+    "publish": "npm run minify && git push origin && git push origin --tags",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+
   }
 }
