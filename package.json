@@ -8,7 +8,9 @@
     "client"
   ],
   "author": "Jake Gordon <jake@codeincomplete.com>",
-  "contributors": ["Steven Black <steveb@stevenblack.com>"],
+  "contributors": [
+    "Steven Black <steveb@stevenblack.com>"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/stevenblack/javascript-state-machine.git"
@@ -24,7 +26,7 @@
     "qunit": "~0.9.1",
     "uglify-js": "^2.7.4"
   },
-  "version": "2.5.2",
+  "version": "2.5.3",
   "scripts": {
     "start": "ws --rewrite '/test -> /test/'",
     "test": "node test/runner",
