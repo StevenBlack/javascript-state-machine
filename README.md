@@ -1,18 +1,17 @@
 # Javascript Finite State Machine
 
-[![NPM version](https://img.shields.io/npm/v/javascript-state-machine.svg?style=flat)](https://www.npmjs.org/package/javascript-state-machine)
-[![Build Status](https://travis-ci.org/jakesgordon/javascript-state-machine.svg?branch=master)](https://travis-ci.org/jakesgordon/javascript-state-machine)
+[![Build Status](https://travis-ci.org/stevenblack/javascript-state-machine.svg?branch=master)](https://travis-ci.org/stevenblack/javascript-state-machine)
 
 A standalone library for finite state machines.
 
+This repo is a fork of [https://github.com/jakesgordon/javascript-state-machine](https://github.com/jakesgordon/javascript-state-machine).
+
 # Download
 
-Using npm:
+Using npm, installing directly from the Github repo, master branch:
 
-    npm install javascript-state-machine
+    npm install stevenblack/javascript-state-machine
 
-Or download the source from [state-machine.js](https://github.com/jakesgordon/javascript-state-machine/raw/master/state-machine.js),
-or the [minified version](https://github.com/jakesgordon/javascript-state-machine/raw/master/state-machine.min.js)
 
 # Usage
 
@@ -330,7 +329,7 @@ define a custom `error` handler:
 
 # Contributing
 
-    > git clone git@github.com:jakesgordon/javascript-state-machine
+    > git clone git@github.com:stevenblack/javascript-state-machine
     > cd javascript-state-machine
 
     > npm install      # install dev dependencies
@@ -345,7 +344,7 @@ define a custom `error` handler:
 
 # Related Links
 
- * You can find the [code on github](https://github.com/jakesgordon/javascript-state-machine)
+ * You can find the [code on github](https://github.com/stevenblack/javascript-state-machine)
  * You can find a [working demo here](http://codeincomplete.com/posts/2011/8/19/javascript_state_machine_v2/example/)
  * [v2.3 release announcement](http://codeincomplete.com/posts/javascript-state-machine-v2-3-0/)
  * [v2.2 release announcement](http://codeincomplete.com/posts/javascript-state-machine-v2-2-0/)
@@ -356,14 +355,9 @@ define a custom `error` handler:
 
 # Release Notes
 
-See [RELEASE NOTES](https://github.com/jakesgordon/javascript-state-machine/blob/master/RELEASE_NOTES.md) file.
+See [RELEASE NOTES](https://github.com/stevenblack/javascript-state-machine/blob/master/RELEASE_NOTES.md) file.
 
 # License
 
-See [LICENSE](https://github.com/jakesgordon/javascript-state-machine/blob/master/LICENSE) file.
+See [LICENSE](https://github.com/stevenblack/javascript-state-machine/blob/master/LICENSE) file.
 
-# Contact
-
-If you have any ideas, feedback, requests or bug reports, you can reach me at
-[jake@codeincomplete.com](mailto:jake@codeincomplete.com), or via
-my website: [Code inComplete](http://codeincomplete.com/)
