@@ -7,10 +7,8 @@
     "server",
     "client"
   ],
-  "author": "Jake Gordon <jake@codeincomplete.com>",
-  "contributors": [
-    "Steven Black <steveb@stevenblack.com>"
-  ],
+  "contributors": ["Jake Gordon <jake@codeincomplete.com>"],
+  "author": "Steven Black <steveb@stevenblack.com>",
   "repository": {
     "type": "git",
     "url": "git://github.com/stevenblack/javascript-state-machine.git"
