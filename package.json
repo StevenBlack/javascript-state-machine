@@ -1,16 +1,17 @@
 {
   "name": "javascript-state-machine",
-  "description": "A simple finite state machine library",
-  "homepage": "https://github.com/jakesgordon/javascript-state-machine",
+  "description": "A simple finite state machine library (forked November 30, 2016).",
+  "homepage": "https://github.com/stevenblack/javascript-state-machine",
   "keywords": [
     "state machine",
     "server",
     "client"
   ],
   "author": "Jake Gordon <jake@codeincomplete.com>",
+  "contributors": ["Steven Black <steveb@stevenblack.com>"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jakesgordon/javascript-state-machine.git"
+    "url": "git://github.com/stevenblack/javascript-state-machine.git"
   },
   "main": "state-machine.js",
   "files": [
