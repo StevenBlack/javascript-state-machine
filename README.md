@@ -83,7 +83,7 @@ the same name if you prefer the verbose approach.
 
 # Callbacks
 
-4 types of callback are available by attaching methods to your StateMachine using the following naming conventions:
+Four types of callback are available by attaching methods to your StateMachine using the following naming conventions:
 
  * `onbeforeEVENT` - fired before the event
  * `onleaveSTATE`  - fired when leaving the old state
