@@ -11,6 +11,7 @@
   "contributors": [
     "Steven Black <steveb@stevenblack.com>"
   ],
+  "license" : "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/stevenblack/javascript-state-machine.git"
