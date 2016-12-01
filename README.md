@@ -1,4 +1,4 @@
-# Javascript Finite State Machine
+# Javascript State Machine
 
 [![Build Status](https://travis-ci.org/stevenblack/javascript-state-machine.svg?branch=master)](https://travis-ci.org/stevenblack/javascript-state-machine)
 
@@ -18,10 +18,6 @@ Using npm, installing directly from the Github repo, master branch:
 Include `state-machine.js` in your web application:
 
     <script src='state-machine.js'></script>
-
-Or for npm:
-
-    var StateMachine = require('javascript-state-machine');
 
 In its simplest form, create a standalone state machine using:
 
